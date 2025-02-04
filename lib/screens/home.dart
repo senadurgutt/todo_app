@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       type: TaskType.calendar,
       title: "Walk",
       description: " Walk 5 KM",
-      isCompleted: true,
+      isCompleted: false,
     ),
     Task(
       type: TaskType.contest,
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       type: TaskType.calendar,
       title: "Walk",
       description: " Walk 5 KM",
-      isCompleted: true,
+      isCompleted: false,
     ),
     Task(
       type: TaskType.contest,

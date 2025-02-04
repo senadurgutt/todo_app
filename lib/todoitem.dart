@@ -16,6 +16,7 @@ class _TodoItemState extends State<TodoItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: widget.task.isCompleted ? Colors.grey : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: EdgeInsets.all(20),
@@ -33,9 +34,20 @@ class _TodoItemState extends State<TodoItem> {
                 children: [
                   Text(
                     widget.task.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        decoration: widget.task.isCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
                   ),
-                  Text(widget.task.description),
+                  Text(
+                    widget.task.description,
+                    style: TextStyle(
+                        decoration: widget.task.isCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
+                  ),
                 ],
               ),
             ),
@@ -44,6 +56,8 @@ class _TodoItemState extends State<TodoItem> {
                 onChanged: (val) => {
                       setState(
                         () {
+                          widget.task.isCompleted = !widget.task
+                              .isCompleted; //tersini eşitlemiş oluyoruz. Çünkü false seçilmişse true yapar ya da tam ters
                           isChecked = val!;
                         },
                       ),
