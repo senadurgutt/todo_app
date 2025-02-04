@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:todo_app/constans/color.dart';
+import 'package:todo_app/constans/tasktype.dart';
+import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screens/add_new_task.dart';
 import 'package:todo_app/todoitem.dart';
 
@@ -10,9 +12,46 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> todo = ["Study English", "Walk", "Flutter"];
-  List<String> completed = ["Take out trash", "Housework"];
+  // List<String> todo = ["Study English", "Walk", "Flutter"];
+  // List<String> completed = ["Take out trash", "Housework"];
+
+  List<Task> todo = [
+    Task(
+      type: TaskType.note,
+      title: "Study English",
+      description: "Study English",
+      isCompleted: false,
+    ),
+    Task(
+      type: TaskType.calendar,
+      title: "Walk",
+      description: " Walk 5 KM",
+      isCompleted: true,
+    ),
+    Task(
+      type: TaskType.contest,
+      title: "Flutter",
+      description: "Flutter",
+      isCompleted: false,
+    ),
+  ];
+
+  List<Task> completed = [
+    Task(
+      type: TaskType.calendar,
+      title: "Walk",
+      description: " Walk 5 KM",
+      isCompleted: true,
+    ),
+    Task(
+      type: TaskType.contest,
+      title: "Flutter",
+      description: "Flutter",
+      isCompleted: false,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           true, //ListView.builderın kendine ait alanla sınırlı kalmasını sağlıyor
                       itemCount: todo.length,
                       itemBuilder: (context, index) {
-                        return TodoItem(title: todo[index]);
+                        return TodoItem(task: todo[index],);
                       },
                     ),
                   ),
@@ -100,17 +139,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     primary: false,
                     itemCount: completed.length,
                     itemBuilder: (context, index) {
-                      return TodoItem(title: completed[index]);
+                      return TodoItem(task: completed[index]);
                     },
                   )),
                 ),
               ),
 
-              ElevatedButton(onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddNewTask(), )
-                );
-              }, child: Text("Add New Button"))
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AddNewTask(),
+                    ));
+                  },
+                  child: Text("Add New Button"))
             ],
           ),
         ),
