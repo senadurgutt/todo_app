@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:todo_app/constans/TaskList.dart';
 import 'package:todo_app/constans/color.dart';
 import 'package:todo_app/constans/tasktype.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/screens/add_new_task.dart';
-import 'package:todo_app/todoitem.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,9 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // List<String> todo = ["Study English", "Walk", "Flutter"];
-  // List<String> completed = ["Take out trash", "Housework"];
-
   List<Task> todo = [
     Task(
       type: TaskType.note,
@@ -57,101 +54,64 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       home: SafeArea(
-        // containerın cihazlardaki en üst panele gelmemesini sağlar
         child: Scaffold(
           backgroundColor: HexColor(backgroundColor),
           body: Column(
             children: [
-              // header
+              // Header
               Container(
-                width: deviceWidth, //responsive tasarım için kullanılıyor
+                width: deviceWidth,
                 height: deviceHeight / 3,
                 decoration: BoxDecoration(
                   color: Colors.purple[300],
-                  image: DecorationImage(
-                      image: AssetImage("lib/assets/images/Ellipse 2.png"),
-                      fit: BoxFit
-                          .cover), // imageın ekrana tam sığması için yapılıyor
+                  image: const DecorationImage(
+                    image: AssetImage("lib/assets/images/Ellipse 2.png"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 child: Column(
                   children: [
-                    Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Text(
-                          "April 18 2025",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    Padding(
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Text(
+                        "April 18 2025",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const Padding(
                       padding: EdgeInsets.only(top: 40),
                       child: Text(
                         "My To Do List",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              // top column
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: SingleChildScrollView(
-                    //bu childın altına koyulan tek childda sonsuz scroll yapabilriz
-                    child: ListView.builder(
-                      primary: false,
-                      shrinkWrap:
-                          true, //ListView.builderın kendine ait alanla sınırlı kalmasını sağlıyor
-                      itemCount: todo.length,
-                      itemBuilder: (context, index) {
-                        return TodoItem(task: todo[index],);
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              // completed text
-              Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Completed",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    )),
-              ),
-              // bottom column
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: SingleChildScrollView(
-                      //bu childın altına koyulan tek childda sonsuz scroll yapabilriz
-                      child: ListView.builder(
-                    shrinkWrap: true,
-                    primary: false,
-                    itemCount: completed.length,
-                    itemBuilder: (context, index) {
-                      return TodoItem(task: completed[index]);
-                    },
-                  )),
-                ),
-              ),
+              // To-Do List
+              Expanded(child: TaskList(tasks: todo, title: "To-Do List")),
+              // Completed List
+              Expanded(child: TaskList(tasks: completed, title: "Completed")),
 
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AddNewTask(),
-                    ));
-                  },
-                  child: Text("Add New Button"))
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddNewTask()),
+                  );
+                },
+                child: const Text("Add New Task"),
+              ),
             ],
           ),
         ),
