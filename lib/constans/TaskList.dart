@@ -29,7 +29,8 @@ class TaskList extends StatelessWidget {
                 primary: false,
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
-                  return TodoItem(task: tasks[index]);
+                  return TodoItem(task: tasks[index]
+                  );
                 },
               ),
             ),

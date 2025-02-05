@@ -103,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(child: TaskList(tasks: todo, title: "To-Do List")),
               // Completed List
               Expanded(child: TaskList(tasks: completed, title: "Completed")),
-
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
