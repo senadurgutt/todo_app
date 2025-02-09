@@ -6,7 +6,7 @@ class TodoService {
   //apiden veri alır
   final String url = "https://dummyjson.com/todos/";
 
-  Future<List> getTodos() async {
+  Future<List> getUncompleted() async {
     // API’den todo listesi çeker ve Todo nesneleri oluşturur
 
     final response = await http.get(Uri.parse(url));
@@ -24,10 +24,47 @@ class TodoService {
 
     resp.forEach(
       (element) {
-        todos.add(Todo.fromJson(element)); //Todo.fromJson(element) → JSON nesnesini Todo nesnesine çevirir.
+        Todo task = Todo.fromJson(element);
+      //  todos.add(Todo.fromJson(element));  Todo.fromJson(element) → JSON nesnesini Todo nesnesine çevirir.
+      
+      if(task.completed! == false) {
+        todos.add(task);
+      }      
       },
     );
 
     return todos;
   }
+
+
+
+
+
+
+  Future<List> getCompleted() async {
+
+    final response = await http.get(Uri.parse(url));
+    List<dynamic> resp = jsonDecode(response.body)["todos"];
+
+    List<dynamic> todos = List.empty(growable: true);
+
+    resp.forEach(
+      (element) {
+        Todo task = Todo.fromJson(element);
+      
+      if(task.completed! == true) {
+        todos.add(task);
+      }      
+      },
+    );
+
+    return todos;
+  }
+
+
+
+
+
+
+
 }

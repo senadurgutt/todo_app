@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:todo_app/model/task.dart';
+import 'package:todo_app/service/todo_service.dart';
 import 'package:todo_app/todoitem.dart';
 
 class TaskList extends StatelessWidget {
@@ -10,6 +11,7 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TodoService todoService = TodoService();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,13 +26,26 @@ class TaskList extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
             child: SingleChildScrollView(
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return TodoItem(task: tasks[index]
+              child: FutureBuilder(
+                future: todoService.getUncompleted(),
+                builder: (context, snapshot) {
+                  print(snapshot.data);
+                  //snapshot veriyi çektiğimiz zmanki görüntüsü demek, veride sonradan değişiklik olduğunda onu almıyor
+                  if(snapshot.data == Null) {
+                    return CircularProgressIndicator();
+
+                  }else {
+                    return ListView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return TodoItem(task: snapshot.data![index]);
+                    },
                   );
+
+                  }
+                 
                 },
               ),
             ),
@@ -40,3 +55,4 @@ class TaskList extends StatelessWidget {
     );
   }
 }
+*/ 
